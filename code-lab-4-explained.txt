@@ -1,0 +1,25 @@
+signal.c
+Example: ./signal -5 sleep 8
+This code creates a child process using fork(). The child process executes the command that is user-defined from the command line. Also, the parent process waits the child to finish except for the case that the child process is killed by the SIGALRM that is sent after the given seconds and uses kill() to send a SIGKILL to kill the child process.
+
+example_sleep.c
+Example: ./example_sleep
+This code sets the SIGINT interrupt handler to just terminate the program when a signal is detected. An infinite loop is assuring that the program waits the generation of a SIGINT and prints a message every 1sec.
+
+example_pause.c
+Example: ./example_pause 10 
+This code takes the seconds as an argument and then sets the alarm() to generate a SIGALRM signal after that time and pauses the program and waits till the SIGALRM is caught. Then it is handled by the catcher(int) function that does a simple print to the stdout, and the program is terminated.
+
+example_kill.c
+Example: ./example_kill 65 
+Here the kill() function is used to send the SIGUSR1 signal to the current process. The handler of the signal just increments the variable that determines how many times the signal has been invoked. The sendsig(int) invokes the signal every 10 iterations of the loop e.g. if argv is 65, then the signal is sent when i=0,10,20,30,40,50,60 (7 times). The returned value of sendsig(int) just confirms the sigcount value.
+
+pipe_1.c
+Example: ./pipe_1 12
+This code creates 12 children processes. Then, each of the child processes write a message to the pipe 'pd', and, finally, the parent process reads from the pipe every string that was written there, and prints it. Of course, in the end, the printed messages are not in ascending order, and that happens because after fork() creates the child processes, the OS doesn't necessarily execute them in the order that they were created.
+Essentially, this is an example code that many child processes communicate with their parent process through a single pipe.
+
+pipe_2.c
+Example: ./pipe_2 
+This code is, essentially, a parent process and child process that communicate through a pipe. The parent is only writing to the pipe and the child is only reading from it.
+
